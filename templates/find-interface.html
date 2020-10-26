@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block custom_head_title %}
+    Find Interface Form
+{% endblock %}
+
+{% block custom_body_heading %}
+    Find Interface with IP Address
+{% endblock %}
+
+{% block form_content %}
+    {{ form.input_ip_address(autocomplete="off", class_="form-control mt-2", autofocus="true", placeholder="192.168.1.1") }}
+
+    <button id="sendSmsButton" class="btn btn-lg btn-primary btn-block mt-4" type="submit">Send SMS</button>
+{% endblock %}
