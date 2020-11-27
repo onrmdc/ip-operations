@@ -1,4 +1,4 @@
-from flask import Flask,request,render_template
+from flask import Flask, request, render_template, jsonify, flash
 from find_port_with_ip import *
 from form import UserForm
 
@@ -20,5 +20,16 @@ def index():
     return render_template('find-interface.html', form=form, result=result)
 
 
+@app.route("/switch_ports.json", methods=['GET', 'POST'])
+def switch_ports():
+    if request.method == 'POST':
+        ip_address = request.get_json()
+        print(ip_address)
+        result_dict = main_func(ip_address)
+        return jsonify(result_dict)
+    else:
+        return "Not Found", 404
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
