@@ -4,71 +4,80 @@
     <meta charset="UTF-8">
     <title>{% block custom_head_title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="static/form_input.css" rel="stylesheet">
 <!-- button waiting -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
 </head>
 
 <body>
 <div class="container">
 
 <div class="row">
-    <div class="col-md-4"></div>
+    <div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-4">
+
+    </div>
 
     <div class="col-md-4">
         <form class="form-inline my-2 my-lg-0 float-right" method="get" action="https:netportal.lcwaikiki.com/services/">
           <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Back to Main</button>
         </form>
     </div>
-
-    <div class="col-md-4"></div>
-</div>
-
-<div class="row text-center d-flex flex-column h-100">
-<form class="form-signin" action="" method="post">
-
-    {{ form.csrf_token }}
-
-    <h1 class="h3 mb-3 font-weight-normal">{% block custom_body_heading %}{% endblock %}</h1>
-
-    {% block form_content %}
-    {% endblock %}
-
-</form>
-
 </div>
 
     <div class="row h-100 align-items-center">
-        <div class="col-md-2"></div>
 
+        <div class="col-md-4">
 
-        <div class="col-md-8">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+            <div class="row text-center d-flex flex-column">
+                <form class="form-signin" action="" method="post">
 
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} text-center" role="alert">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
+                    {{ form.csrf_token }}
 
-            {% endwith %}
+                    <h1 class="h3 mb-3 font-weight-normal">{% block custom_body_heading %}{% endblock %}</h1>
+
+                    {% block form_content %}
+                    {% endblock %}
+
+                </form>
+                <div id="formQueryResultDiv"></div>
+            </div>
+
         </div>
 
-        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
+            <table
+                        id="switchPortsTable"
+                        class="table table-hover table-sm"
+                        data-pagination="true"
+                >
+                  <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" data-field="hostname" data-sortable="true">Switch Name</th>
+                        <th scope="col" data-field="logical" data-sortable="true" class="cell-hyphens">Logical Interfaces</th>
+                        <th scope="col" data-field="actives" data-sortable="true" class="cell-hyphens">Active Bound Interfaces</th>
+                        <th scope="col" data-field="inactives" data-sortable="true" class="cell-hyphens">Inactive Bound Interfaces</th>
+                    </tr>
+                  </thead>
+            </table>
+
+        </div>
+
 
     </div>
 
     </div>
 </div>
 
-<script src="static/jquery.min.js"></script>
+<script src="./static/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<script src="static/scripts.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
+<script src="./static/scripts.js"></script>
 
 
 </body>

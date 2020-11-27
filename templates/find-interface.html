@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block form_content %}
-    {{ form.input_ip_address(autocomplete="off", class_="form-control mt-2", autofocus="true", placeholder="192.168.1.1") }}
+    {{ form.input_ip_address(id="inputIpAddress", autocomplete="off", class_="form-control mt-2", autofocus="true", placeholder="192.168.1.1") }}
 
     <button id="findIpAddButton" class="btn btn-lg btn-primary btn-block mt-4" type="submit">Find</button>
 
