@@ -9,10 +9,13 @@ from getpass import getpass
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-currentuser = input("username: ")
-currentpass = getpass("password: ")
+#currentuser = input("username: ")
+#currentpass = getpass("password: ")
+#ip_address = input("ip_address: ")
 
-ip_address = input("ip_address: ")
+currentuser = '-'
+currentpass = '-'
+
 
 
 def eapi(switch, cmds):
@@ -106,4 +109,4 @@ def validate_ip(ip_address):
     return result
 
 
-main_func(ip_address)
+#main_func(ip_address)
