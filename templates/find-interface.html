@@ -11,5 +11,11 @@
 {% block form_content %}
     {{ form.input_ip_address(autocomplete="off", class_="form-control mt-2", autofocus="true", placeholder="192.168.1.1") }}
 
-    <button id="sendSmsButton" class="btn btn-lg btn-primary btn-block mt-4" type="submit">Send SMS</button>
+    <button id="findIpAddButton" class="btn btn-lg btn-primary btn-block mt-4" type="submit">Find</button>
+
+{% if result %}
+    <br>
+    {{ result }}
+    {% endif %}
+
 {% endblock %}
