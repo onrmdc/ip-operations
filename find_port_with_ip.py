@@ -9,14 +9,12 @@ from getpass import getpass
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
 #currentuser = input("username: ")
 #currentpass = getpass("password: ")
 #ip_address = input("ip_address: ")
 
 currentuser = os.environ["NETUSER"]
 currentpass = os.environ["NETPASS"]
-
 
 
 def eapi(switch, cmds):
@@ -98,11 +96,11 @@ def main_func(ip_address):
                             continue
                         get_po_bound_ints_cmd = ['enable', 'show port-channel {} all-ports '.format(po_number)]
                         get_po_bound_ints = eapi(switch, get_po_bound_ints_cmd)
-                        host_dict['actives'] = list(get_po_bound_ints['result'][1]['portChannels'][mac_to_eth2]['activePorts'].keys())
-                        host_dict['inactives'] = list(get_po_bound_ints['result'][1]['portChannels'][mac_to_eth2][
-                            'inactivePorts'].keys())
+                        host_dict['actives'] = " ".join(get_po_bound_ints['result'][1]['portChannels'][mac_to_eth2]['activePorts'].keys())
+                        host_dict['inactives'] = " ".join(get_po_bound_ints['result'][1]['portChannels'][mac_to_eth2]['inactivePorts'].keys())
                     print(hostname + ' : Interface ' + mac_to_eth2)
                     return_dict['host_ports'].append(host_dict)
+
                 else:
                     # print(hostname + ' : MAC bu switchte degil')
                     print('-')
