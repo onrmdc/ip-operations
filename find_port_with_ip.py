@@ -35,47 +35,72 @@ def eapi(switch, cmds):
                       verify=False, auth=HTTPBasicAuth(currentuser, currentpass))
     return json.loads(r.text)
 
+# change for mac search 1
+# ARP Table
+with open('/project/arp_device_list.txt', 'r') as f:
+    content = f.read()
+    devicelist = content.splitlines()
+
+# MAC Address Table
+with open('/project/mac_device_list.txt', 'r') as f:
+    content = f.read()
+    devicelist2 = content.splitlines()
 
 def main_func(ip_address):
     return_dict = {}
-    ip_control = validate_ip(ip_address)
-    if ip_control:
-        # ARP Table
-        with open('/project/arp_device_list.txt', 'r') as f:
-            content = f.read()
-            devicelist = content.splitlines()
+    # change for mac search 2
+    if '.' in ip_address:
+        print('detect ip address in input box')
+        ip_control = validate_ip(ip_address)
+        if ip_control:
+            # change for mac search 3
+            # ARP Table
+            #with open('/project/arp_device_list.txt', 'r') as f:
+            #    content = f.read()
+            #    devicelist = content.splitlines()
 
-        # MAC Address Table
-        with open('/project/mac_device_list.txt', 'r') as f:
-            content = f.read()
-            devicelist2 = content.splitlines()
+            # MAC Address Table
+            #with open('/project/mac_device_list.txt', 'r') as f:
+            #    content = f.read()
+            #    devicelist2 = content.splitlines()//
 
-        get_hostname = ['enable', 'show hostname']
-        get_ip = ['enable', 'show arp ' + ip_address]
-
-    else:
-        return False
-        # print("IP adresi hatali formatta girildi")
-
-    ip_to_mac_api_result = ""
-    return_dict['arp'] = []
-    for switch in devicelist:
-        ping_ip = ["enable", "ping {} repeat 1".format(ip_address)]
-        eapi(switch, ping_ip)
-        hostname = eapi(switch, get_hostname)['result'][1]['hostname']
-        ip_to_mac_api_result = eapi(switch, get_ip)
-        if len(ip_to_mac_api_result['result'][1]['ipV4Neighbors']) > 0:
-            ip_to_mac_output = ip_to_mac_api_result['result'][1]['ipV4Neighbors'][0]['hwAddress']
-            ip_to_mac_output = ip_to_mac_output.replace('.', '')
-            ip_to_mac_output = ':'.join(ip_to_mac_output[i:i + 2] for i in range(0, len(ip_to_mac_output), 2))
-
-            print(hostname + ' : Bu IP nin Mac adresi ' + ip_to_mac_output)
-            # MAC addresses extracted from ARP Tables
-            return_dict['arp'].append(ip_to_mac_output)
+            get_hostname = ['enable', 'show hostname']
+            get_ip = ['enable', 'show arp ' + ip_address]
 
         else:
-            # print(hostname + ' : IP bu Switchin ARP tablosunda degil')
-            print('-')
+            return False
+            # print("IP adresi hatali formatta girildi")
+
+        ip_to_mac_api_result = ""
+        return_dict['arp'] = []
+        for switch in devicelist:
+            ping_ip = ["enable", "ping {} repeat 1".format(ip_address)]
+            eapi(switch, ping_ip)
+            hostname = eapi(switch, get_hostname)['result'][1]['hostname']
+            ip_to_mac_api_result = eapi(switch, get_ip)
+            if len(ip_to_mac_api_result['result'][1]['ipV4Neighbors']) > 0:
+                ip_to_mac_output = ip_to_mac_api_result['result'][1]['ipV4Neighbors'][0]['hwAddress']
+                ip_to_mac_output = ip_to_mac_output.replace('.', '')
+                ip_to_mac_output = ':'.join(ip_to_mac_output[i:i + 2] for i in range(0, len(ip_to_mac_output), 2))
+
+                print(hostname + ' : Bu IP nin Mac adresi ' + ip_to_mac_output)
+                # MAC addresses extracted from ARP Tables
+                return_dict['arp'].append(ip_to_mac_output)
+                #print(ip_to_mac_api_result)
+
+            else:
+                # print(hostname + ' : IP bu Switchin ARP tablosunda degil')
+                print('-')
+
+    # change for mac search 4
+    else:
+        print('detect mac address in input box')
+        return_dict['arp'] = []
+        ip_to_mac_api_result = ""
+        ip_to_mac_output = ip_address
+        print(' : Bu IP nin Mac adresi ' + ip_to_mac_output)
+        # MAC addresses extracted from ARP Tables
+        return_dict['arp'].append(ip_to_mac_output)
 
     if ip_to_mac_api_result:
         if len(ip_to_mac_api_result['result'][1]['ipV4Neighbors']) > 0:
