@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>{% block custom_head_title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <!-- button waiting -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <link href="static/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -57,7 +59,7 @@
                 >
                   <thead class="thead-dark">
                     <tr>
-                        <th scope="col" data-field="hostname" data-sortable="true">Switch Name</th>
+                        <th style="width:200px" scope="col" data-field="hostname" data-sortable="true">Switch Name</th>
                         <th scope="col" data-field="logical" data-sortable="true" class="cell-hyphens">Logical Interfaces</th>
                         <th style="width:15ch" scope="col" data-field="actives" data-sortable="true" class="cell-hyphens">Active</th>
                         <th style="width:15ch" scope="col" data-field="inactives" data-sortable="true" class="cell-hyphens">Inactive</th>

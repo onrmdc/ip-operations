@@ -47,37 +47,19 @@ with open('/project/mac_device_list.txt', 'r') as f:
     devicelist2 = content.splitlines()
 
 
-def main_func(ip_address):
+def main_func(input_address):
     get_hostname = ['enable', 'show hostname']
     return_dict = {}
     # change for mac search 2
-    if '.' in ip_address:
+    if validate_ip(input_address):
         print('detect ip address in input box')
-        ip_control = validate_ip(ip_address)
-        if ip_control:
-            # change for mac search 3
-            # ARP Table
-            #with open('/project/arp_device_list.txt', 'r') as f:
-            #    content = f.read()
-            #    devicelist = content.splitlines()
-
-            # MAC Address Table
-            #with open('/project/mac_device_list.txt', 'r') as f:
-            #    content = f.read()
-            #    devicelist2 = content.splitlines()//
-
-            #get_hostname = ['enable', 'show hostname']
-            get_ip = ['enable', 'show arp ' + ip_address]
-
-        else:
-            return False
-            # print("IP adresi hatali formatta girildi")
+        get_ip = ['enable', 'show arp ' + input_address]
 
         ip_to_mac_api_result = ""
         return_dict['arp'] = []
         ip_to_mac_output = ""
         for switch in devicelist:
-            ping_ip = ["enable", "ping {} repeat 1".format(ip_address)]
+            ping_ip = ["enable", "ping {} repeat 1".format(input_address)]
             eapi(switch, ping_ip)
             hostname = eapi(switch, get_hostname)['result'][1]['hostname']
             ip_to_mac_api_result = eapi(switch, get_ip)
@@ -96,14 +78,16 @@ def main_func(ip_address):
                 print('-')
 
     # change for mac search 4
-    else:
+    elif validate_mac(input_address):
         print('detect mac address in input box')
         return_dict['arp'] = []
         ip_to_mac_api_result = True
-        ip_to_mac_output = ip_address
+        ip_to_mac_output = input_address
         print(' : Bu IP nin Mac adresi ' + ip_to_mac_output)
         # MAC addresses extracted from ARP Tables
         return_dict['arp'].append(ip_to_mac_output)
+    else:
+        return 'Invalid IP or MAC Address'
 
     if ip_to_mac_api_result:
         #if len(ip_to_mac_api_result['result'][1]['ipV4Neighbors']) > 0:
@@ -144,6 +128,8 @@ def main_func(ip_address):
 def validate_ip(ip_address):
     result = re.findall(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", ip_address)
     return result
-
+def validate_mac(mac_address):
+    result = re.match(r"^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$", mac_address)
+    return result
 
 #main_func(ip_address)
