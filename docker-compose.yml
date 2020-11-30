@@ -1,0 +1,11 @@
+my-ip-op-project:
+    restart: always
+    build: .
+    volumes:
+      - ./ip-operations:/project
+    environment:
+      - NETUSER=aristaswitchadmin
+      - NETPASS=aristaswitchpass
+      - FLASKSECRETKEY=you-can-use-os-urandom-with-24hex-after-import-os-in-python
+    ports:
+      - 5002:5000
