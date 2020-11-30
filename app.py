@@ -1,10 +1,11 @@
 from flask import Flask, request, render_template, jsonify, flash
 from find_port_with_ip import *
 from form import UserForm
+import os
 
 
 app = Flask(__name__)
-app.secret_key = 'fa43422c30f0153f9ad461572fd32e1955db2865289c8198'
+app.secret_key = os.environ["FLASKSECRETKEY"]
 
 
 @app.route("/", methods=['POST', 'GET'])
