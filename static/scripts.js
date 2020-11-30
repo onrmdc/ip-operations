@@ -3,6 +3,7 @@ let $switchPortsTable = $('#switchPortsTable');
 let formQueryResultDiv = document.getElementById("formQueryResultDiv")
 
 $(document).on("click", "#findIpAddButton", function(event){
+    formQueryResultDiv.innerHTML = "";
     event.preventDefault();
     let ip_address = $('#inputIpAddress').val();
     console.log(ip_address);
@@ -16,6 +17,7 @@ $(document).on("click", "#findIpAddButton", function(event){
             $switchPortsTable.bootstrapTable("destroy");
             $switchPortsTable.bootstrapTable({data: data.host_ports})
             formQueryResultDiv.innerHTML = "MAC Address: " + data.arp[0];
+
         }
     });
 });
