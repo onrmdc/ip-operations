@@ -46,7 +46,9 @@ with open('/project/mac_device_list.txt', 'r') as f:
     content = f.read()
     devicelist2 = content.splitlines()
 
+
 def main_func(ip_address):
+    get_hostname = ['enable', 'show hostname']
     return_dict = {}
     # change for mac search 2
     if '.' in ip_address:
@@ -64,7 +66,7 @@ def main_func(ip_address):
             #    content = f.read()
             #    devicelist2 = content.splitlines()//
 
-            get_hostname = ['enable', 'show hostname']
+            #get_hostname = ['enable', 'show hostname']
             get_ip = ['enable', 'show arp ' + ip_address]
 
         else:
@@ -73,6 +75,7 @@ def main_func(ip_address):
 
         ip_to_mac_api_result = ""
         return_dict['arp'] = []
+        ip_to_mac_output = ""
         for switch in devicelist:
             ping_ip = ["enable", "ping {} repeat 1".format(ip_address)]
             eapi(switch, ping_ip)
@@ -96,14 +99,15 @@ def main_func(ip_address):
     else:
         print('detect mac address in input box')
         return_dict['arp'] = []
-        ip_to_mac_api_result = ""
+        ip_to_mac_api_result = True
         ip_to_mac_output = ip_address
         print(' : Bu IP nin Mac adresi ' + ip_to_mac_output)
         # MAC addresses extracted from ARP Tables
         return_dict['arp'].append(ip_to_mac_output)
 
     if ip_to_mac_api_result:
-        if len(ip_to_mac_api_result['result'][1]['ipV4Neighbors']) > 0:
+        #if len(ip_to_mac_api_result['result'][1]['ipV4Neighbors']) > 0:
+        if ip_to_mac_output:
             return_dict['host_ports'] = []
             for i, switch in enumerate(devicelist2):
                 # macden port bulma baslangici
